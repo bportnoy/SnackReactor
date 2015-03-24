@@ -28,7 +28,7 @@ exports.search = {
         .orderByRaw('random()').limit(3);// add organization_id here
       }) 
       .fetchAll().then(function(models) {
-        // console.log(models);
+        console.log(models);
         if (models.size()) {
           var results = [];
           models.forEach(function(model){
