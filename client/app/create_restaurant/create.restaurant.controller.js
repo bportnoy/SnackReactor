@@ -33,6 +33,9 @@ app.controller('4Ctrl', function ($scope, $window, $modalInstance, items, OrgSel
   $scope.heartText = '';
   $scope.priceText = '';
   $scope.ratingText = '';
+  $scope.acOptions = {
+    watchEnter: true
+  };
 
   $scope.hoverHeart = function(value) {
     var heartText = {

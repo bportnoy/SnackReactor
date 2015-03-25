@@ -10,7 +10,7 @@
             <form name="createRest" id="createRest" ng-model="restForm" class="sr-form">
                 <div class="form-group">
                     <label for="name">Restaurant Name</label>
-                    <input type="text" class="form-control" id="name" placeholder="Name" ng-model="createRest.name" autofocus=true required>
+                    <input type="text" id="name" ng-model="createRest.name" class="form-control" g-places-autocomplete required autofocus=true details="createRest.details">
                 </div>
                 <div class="form-group">
                     <label for="address">Address</label>

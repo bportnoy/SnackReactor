@@ -376,3 +376,7 @@ button{
 .star-rating{
     color: #F4C712;
 }
+
+.pac-container{
+    z-index: 999999;
+}

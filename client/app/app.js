@@ -9,7 +9,7 @@ angular.module('snackReactorApp', [
   'angularModalService',
   'snackReactor-services',
   'google.places'
-])
+  ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
  
     $urlRouterProvider
