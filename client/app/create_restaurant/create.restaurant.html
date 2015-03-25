@@ -10,11 +10,11 @@
             <form name="createRest" id="createRest" ng-model="restForm" class="sr-form">
                 <div class="form-group">
                     <label for="name">Restaurant Name</label>
-                    <input type="text" id="name" ng-model="createRest.name" class="form-control" g-places-autocomplete required autofocus=true details="createRest.details">
+                    <input type="text" id="name" ng-model="createRest.details" class="form-control" g-places-autocomplete required autofocus=true details="createRest.details">
                 </div>
                 <div class="form-group">
                     <label for="address">Address</label>
-                    <input type="address" for="address" class="form-control" id="address" placeholder="Address" ng-model="createRest.address" required>
+                    <input type="address" for="address" class="form-control" id="address" placeholder="Address" ng-model="createRest.details.formatted_address" required>
                 </div>
                 <div class="form-group">
                     <label for="healthRating">How healthy is this restaurant?</label>

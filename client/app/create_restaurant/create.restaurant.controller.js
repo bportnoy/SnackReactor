@@ -91,7 +91,8 @@ app.controller('4Ctrl', function ($scope, $window, $modalInstance, items, OrgSel
     $scope.successMessage = '';
     $scope.failureMessage = '';
     console.log();
-    CreateRestaurant($scope.createRest.name, $scope.createRest.address, $scope.createRest.healthRating, $scope.createRest.priceRating, $scope.createRest.description, $scope.createRest.rating)
+    CreateRestaurant($scope.createRest.details.name, $scope.createRest.details.address, $scope.createRest.healthRating,
+     $scope.createRest.priceRating, $scope.createRest.description, $scope.createRest.rating, $scope.createRest.details)
     .success(function(data, status, headers, config){
       $scope.submitting = false;
       $scope.successMessage = 'Restaurant created successfully, thanks!';
