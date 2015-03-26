@@ -113,7 +113,7 @@ button{
 }
 
 #search {
-    margin-top: 5%;
+    margin-top: .5em;
     cursor: pointer;
     font-weight: lighter;
     -webkit-appearance: none;
@@ -135,6 +135,7 @@ button{
     padding-right: 40px;
     font-size: 50px;
     border-radius: 5px;
+    clear: both;
 }
 
 #reshuffle {
@@ -196,8 +197,8 @@ button{
     transition: all .3s linear;
 }
 .fa-usd{
-    font-size: 120px;
-    margin-right: 5px;
+    margin-right: .1em;
+    margin-left: .1em;
     color: #82F4AA;
     transition: all .3s linear;
 }
@@ -208,8 +209,9 @@ button{
 .price {
     color: #00C716;
 }
-#logout{
+.nav-text{
     float:right;
+    margin: .5em 2em;
 }
 
 .modal-body{
@@ -365,12 +367,10 @@ button{
 }
 
 .dollar-off{
-    color: black;
-    font-size: 2em;
+    color: #F6F5F2;
 }
 
 .dollar-on{
-    font-size: 2em;
 }
 
 .star-rating{
@@ -379,4 +379,13 @@ button{
 
 .pac-container{
     z-index: 999999;
+}
+
+.main-search {
+    margin: 0em 0em 2em 0em;
+}
+
+.label-container {
+    height: 1em;
+    width: auto;
 }

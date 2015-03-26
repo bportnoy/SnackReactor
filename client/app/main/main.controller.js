@@ -4,22 +4,45 @@ var app = angular.module('snackReactorApp');
 //refactor to services
 app.controller('MainCtrl', function ($scope, $http, $log,$document, ModalService,$location, SearchRestaurants, SharedData) {
 
-  $scope.isLogged = false;
-  $scope.priceClick = false;
-  $scope.is1healthClick = false;
-  $scope.is2healthClick = false;
-  $scope.is3healthClick = false;
-  $scope.is1priceClick = false;
-  $scope.is2priceClick = false;
-  $scope.is3priceClick = false;
-  $scope.healthRank=1;
-  $scope.priceRank=1;
-  $scope.searching = false;
-  $scope.noResults = false;
+  // $scope.isLogged = false;
+  // $scope.priceClick = false;
+  // $scope.is1healthClick = false;
+  // $scope.is2healthClick = false;
+  // $scope.is3healthClick = false;
+  // $scope.is1priceClick = false;
+  // $scope.is2priceClick = false;
+  // $scope.is3priceClick = false;
+  // $scope.healthRank=1;
+  // $scope.priceRank=1;
+  // $scope.searching = false;
+  // $scope.noResults = false;
 
-  //empty array that will store three random objects.
-  //used in our search function to generate results page.
-  $scope.places = [];
+  $scope.heartText = '';
+  $scope.priceText = '';
+  $scope.ratingText = '';
+  $scope.health = 0;
+  $scope.price = 0;
+
+  $scope.hoverHeart = function(value) {
+    var heartText = {
+      1: 'Junk food!',
+      2: 'Any food will do.',
+      3: 'Something healthy, please!',
+      4: ''
+    };
+    $scope.heartText = heartText[value];
+  };
+
+
+  $scope.hoverPrice = function(value) {
+    var priceText = {
+      1: '$9 & Under',
+      2: '$10 - $19',
+      3: '$20 ++',
+      4: ''
+    };
+    $scope.priceText = priceText[value];
+  };
 
 
   $scope.logout = function (){
@@ -32,10 +55,10 @@ app.controller('MainCtrl', function ($scope, $http, $log,$document, ModalService
 
     //save data in case we need to search again
 
-    SharedData.set('health', $scope.healthRank);
-    SharedData.set('price', $scope.priceRank);
+    SharedData.set('health', $scope.health);
+    SharedData.set('price', $scope.price);
 
-    SearchRestaurants($scope.healthRank,$scope.priceRank)
+    SearchRestaurants($scope.health,$scope.price)
     .success(function(data, status, headers, config){
       $scope.searching = false;
       SharedData.set('results', data);
@@ -47,100 +70,8 @@ app.controller('MainCtrl', function ($scope, $http, $log,$document, ModalService
       $scope.noResults = true;
       console.log(data);
     }); 
+  }
 
-  }
-  //Pardon the naive logic, just wanted to get this done.
-  $scope.healthClick1 = function (){
-    if ($scope.is1healthClick && ($scope.is2healthClick || $scope.is3healthClick)){
-      $scope.is2healthClick = false;
-      $scope.is3healthClick = false;
-      $scope.is1healthClick = false;
-    }
-    $scope.is1healthClick = !$scope.is1healthClick;
-    if ($scope.is1healthClick){
-      SearchRestaurants.health = $scope.healthRank=1;
-
-    }else{
-      SearchRestaurants.health = $scope.healthRank=1;
-    }
-  }
-  $scope.healthClick2 = function (){
-    SearchRestaurants.health = $scope.healthRank=2;
-    if ($scope.is3healthClick){
-      $scope.is3healthClick = false;
-      return;
-    }
-    if ($scope.is2healthClick && $scope.is1healthClick){
-      $scope.is1healthClick = $scope.is2healthClick = false;
-      SearchRestaurants.health = $scope.healthRank=1;
-      return;
-    }
-    $scope.is1healthClick = true;
-    $scope.is2healthClick = true;
-  }
-  $scope.healthClick3 = function (){
-    SearchRestaurants.health = $scope.healthRank=3;
-    if ($scope.is1healthClick && $scope.is2healthClick && $scope.is3healthClick){
-      $scope.is1healthClick = false;
-      $scope.is2healthClick = false;
-      $scope.is3healthClick = false;
-      $scope.healthRank = 1;
-      console.log($scope.healthRank);
-      return;
-    }
-    $scope.is3healthClick = !$scope.is3healthClick;
-    if ($scope.is1healthClick || $scope.is2healthClick || (!$scope.is1healthClick && !$scope.is2healthClick)){
-      $scope.is1healthClick = true;
-      $scope.is2healthClick = true;
-      console.log($scope.healthRank);
-      return;
-    }
-  }
-  $scope.priceClick1 = function (){
-    if ($scope.is1priceClick && ($scope.is2priceClick || $scope.is3priceClick)){
-      $scope.is2priceClick = false;
-      $scope.is3priceClick = false;
-      $scope.is1priceClick = false;
-    }
-    $scope.is1priceClick = !$scope.is1priceClick;
-    if ($scope.is1priceClick){
-      SearchRestaurants.price= $scope.priceRank=1;
-    }else{
-      SearchRestaurants.price= $scope.priceRank=1;
-    }
-  }
-  $scope.priceClick2 = function (){
-    SearchRestaurants.price= $scope.priceRank=2;
-    if ($scope.is3priceClick){
-      $scope.is3priceClick = false;
-      return;
-    }
-    if ($scope.is2priceClick && $scope.is1priceClick){
-      $scope.is1priceClick = $scope.is2priceClick = false;
-      $scope.priceRank=1;
-      return;
-    }
-    $scope.is1priceClick = true;
-    $scope.is2priceClick = true;
-  }
-  $scope.priceClick3 = function (){
-    SearchRestaurants.price= $scope.priceRank=3;
-    if ($scope.is1priceClick && $scope.is2priceClick && $scope.is3priceClick){
-      $scope.is1priceClick = false;
-      $scope.is2priceClick = false;
-      $scope.is3priceClick = false;
-      $scope.priceRank = 1;
-      console.log($scope.priceRank);
-      return;
-    }
-    $scope.is3priceClick = !$scope.is3priceClick;
-    if ($scope.is1priceClick || $scope.is2priceClick || (!$scope.is1priceClick && !$scope.is2priceClick)){
-      $scope.is1priceClick = true;
-      $scope.is2priceClick = true;
-      console.log($scope.priceRank);
-      return;
-    }
-  }
 });
 
 app.controller('ModalCtrl', function ($scope, $modal, $log, CheckLoggedIn) {

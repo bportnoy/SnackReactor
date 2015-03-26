@@ -50,9 +50,9 @@ app.controller('4Ctrl', function ($scope, $window, $modalInstance, items, OrgSel
 
   $scope.hoverPrice = function(value) {
     var priceText = {
-      1: '$7 & Under',
-      2: '$8 - $15',
-      3: '$15 ++',
+      1: '$9 & Under',
+      2: '$10 - $19',
+      3: '$20 ++',
       4: ''
     };
     $scope.priceText = priceText[value];
