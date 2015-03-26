@@ -46,7 +46,7 @@
                     <span class="label label-danger">{{failureMessage}}</span>
                     <div class="action-btns">
                         <button type="submit" class="btn btn-done btn-warning pull-right" ng-click="doneButton()">Done</button>
-                        <button type="submit" class="btn btn-primary pull-right" ng-click="submitRestaurant()" ng-disabled="createRest.$invalid">Create</button>
+                        <button type="submit" class="btn btn-primary pull-right" ng-click="submitRestaurant()" ng-disabled="createRest.$invalid || !createRest.details.name">Create</button>
                     </div>
                 </div>
             </form>

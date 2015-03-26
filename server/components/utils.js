@@ -18,18 +18,8 @@ exports.calculateAvgRating = function(restaurantId, orgId){
     OrganizationRestaurant.forge({restaurant_id: restaurantId, organization_id: orgId})
     .fetch()
     .then(function(orgRest){
-      if (orgRest){
         orgRest.set('avg_rating', avgRating);
         orgRest.save();
-      } else {
-        OrganizationRestaurant.forge({
-          organization_id: orgId,
-          restaurant_id: restaurantId,
-          avg_rating: avgRating
-        })
-        .save();
-      }
     });
   });
-
 };

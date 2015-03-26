@@ -24,32 +24,32 @@ exports.restaurants = {
     var description = req.body.description;
     var organization_id = req.user.organization_id;
     var name = req.body.name;
-    var address = req.body.address;
+    // var address = req.body.details.formatted_address;
     var userRating = req.body.rating;
+    var details = req.body.details;
 
     // getDetails is a utility function created to interact with the Google Places API
-    places.getDetailsFromAddressAndName(address,name).then(function(details) {
-      if (!details.length) {
-        res.send(400, 'Failed to fetch restaurant details.');
-        return;
-      }
+    // places.getDetailsFromAddressAndName(address,name).then(function(details) {
+    //   if (!details.length) {
+    //     res.send(400, 'Failed to fetch restaurant details.');
+    //     return;
+    //   }
       var newRestaurant = {
-        name: details[0].result.name,
+        name: details.name,
         price: price,
         health: health,
-        address: details[0].result.formatted_address,
-        location_lat: details[0].result.geometry.location.lat,
-        location_long: details[0].result.geometry.location.lng,
-        phone_number: details[0].result.formatted_phone_number,
-        place_id: details[0].result.place_id,
+        address: details.formatted_address,
+        location_lat: details.geometry.location.lat,
+        location_long: details.geometry.location.lng,
+        phone_number: details.formatted_phone_number,
+        place_id: details.place_id,
         // photo_url: details[0].result.photos[0].photo_reference, // need to protect against no photo
         description: description,
-        // organization_id: organization_id
       };
 
-      if (details[0].result.photos) newRestaurant.photo_url = details[0].result.photos[0].photo_reference;
+      if (details.photos) newRestaurant.photo_url = details.photos[0].photo_reference;
 
-      var hours = places.parseHours(details[0].result.opening_hours); //parse the opening hours object
+      var hours = places.parseHours(details.opening_hours); //parse the opening hours object
 
       new Restaurant({place_id: details.place_id}).fetch().then(function(found) {
         if (found) {
@@ -58,6 +58,7 @@ exports.restaurants = {
         } else {
           var restaurant = new Restaurant(newRestaurant);
           restaurant.save().then(function(model) {
+            res.send(201, model); // send the response, since the restaurant has been created
             hours.forEach(function(period){
               new Hour({restaurant_id: model.get('id'), day: period[0], open: period[1], close: period[2]}).save();
             });
@@ -68,13 +69,21 @@ exports.restaurants = {
               rating: req.body.rating
             }).save()
             .then(function(){
-              utils.calculateAvgRating(restaurant.get('id'), req.user.organization_id); // calculate the first avg
-            });
-            res.send(201, model);
+              new OrgRest({
+                restaurant_id: restaurant.get('id'),
+                organization_id: req.user.organization_id,
+                description: description
+              })
+              .save()
+              .then(function(){
+                utils.calculateAvgRating(restaurant.get('id'), req.user.organization_id); // calculate the first avg
+              });
+            })//org-rest creation.
           });
-        }
-      });
-    });
+        }//else
+      });// new restayrant
+
+    // });
   }, //create
 
   rating: function(req,res){
@@ -116,5 +125,4 @@ exports.restaurants = {
       }
     });
   }
-
 };
