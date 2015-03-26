@@ -98,14 +98,15 @@ angular.module('snackReactor-services',[])
     });
   };
 
-  instance.createOrg = function(github_id, address, name, github_login, placeId){
-    placeId = placeId || null;
+  instance.createOrg = function(github_id, address, name, github_login, placeId, details){
+    placeId = placeId || undefined;
     return $http.post('/org/create/github', {
       github_id: github_id,
       address: address,
       name: name,
       github_login: github_login,
-      placeId: placeId
+      placeId: placeId,
+      details: details
     });
   }
 
