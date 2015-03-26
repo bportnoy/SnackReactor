@@ -27,6 +27,6 @@ describe('Controller: MainCtrl', function () {
   });
 
   it('should instantiate properly', function(){
-    expect(scope.isLogged).toBe(false);
+    expect(scope.health).toBe(0);
   })
 });
