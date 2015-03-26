@@ -31,6 +31,9 @@ app.controller('3Ctrl', function ($scope, $modalInstance, items, OrgSelect, $loc
 
   var search = $location.search();
   $scope.submitting = false;
+  $scope.successMessage = '';
+  $scope.failureMessage = '';
+
 
   OrgSelect.getAccessToken()
   .then(function(response){
@@ -44,15 +47,21 @@ app.controller('3Ctrl', function ($scope, $modalInstance, items, OrgSelect, $loc
 
   $scope.submitOrg = function(){
     $scope.submitting = true;
-    OrgSelect.createOrg($scope.createOrg.id, $scope.createOrg.address, $scope.createOrg.name, $scope.createOrg.login, $scope.createOrg.placeId)
+    $scope.successMessage = '';
+    $scope.failureMessage = '';
+    console.log($scope.createOrg);
+    OrgSelect.createOrg($scope.createOrg.id, $scope.createOrg.details.formatted_address, 
+      $scope.createOrg.details.name, $scope.createOrg.login, $scope.createOrg.details.place_id, $scope.createOrg.details)
     .success(function(data, status, headers, config){
       console.log('success');
       $scope.submitting = false;
+      $scope.successMessage = 'Organization created successfully.';
       $location.path('/');
       $location.search({github_login: null, github_id: null});
       window.location.reload();//ideally we'll figure out how to close that fucking modal
     })
     .error(function(data, status, headers, config){
+      $scope.failureMessage = 'Error creating organization.';
       $scope.submitting = false;
     });
   };

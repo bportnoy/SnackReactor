@@ -32,6 +32,7 @@ exports.search = {
         if (models.size()) {
           var results = [];
           models.forEach(function(model){
+            //also need to fetch org-specific descriptions here
             //transform the photo reference into a URL
             model.set('photo_url',
               'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photoreference=' + model.get('photo_url') + '&key=AIzaSyDUYAAHTfuH1FhBacOWtF01FZGjF7Sd3mc');

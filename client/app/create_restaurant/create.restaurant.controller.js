@@ -33,6 +33,9 @@ app.controller('4Ctrl', function ($scope, $window, $modalInstance, items, OrgSel
   $scope.heartText = '';
   $scope.priceText = '';
   $scope.ratingText = '';
+  $scope.acOptions = {
+    watchEnter: true
+  };
 
   $scope.hoverHeart = function(value) {
     var heartText = {
@@ -47,9 +50,9 @@ app.controller('4Ctrl', function ($scope, $window, $modalInstance, items, OrgSel
 
   $scope.hoverPrice = function(value) {
     var priceText = {
-      1: '$7 & Under',
-      2: '$8 - $15',
-      3: '$15 ++',
+      1: '$9 & Under',
+      2: '$10 - $19',
+      3: '$20 ++',
       4: ''
     };
     $scope.priceText = priceText[value];
@@ -88,7 +91,8 @@ app.controller('4Ctrl', function ($scope, $window, $modalInstance, items, OrgSel
     $scope.successMessage = '';
     $scope.failureMessage = '';
     console.log();
-    CreateRestaurant($scope.createRest.name, $scope.createRest.address, $scope.createRest.healthRating, $scope.createRest.priceRating, $scope.createRest.description, $scope.createRest.rating)
+    CreateRestaurant($scope.createRest.details.name, $scope.createRest.details.address, $scope.createRest.healthRating,
+     $scope.createRest.priceRating, $scope.createRest.description, $scope.createRest.rating, $scope.createRest.details)
     .success(function(data, status, headers, config){
       $scope.submitting = false;
       $scope.successMessage = 'Restaurant created successfully, thanks!';
