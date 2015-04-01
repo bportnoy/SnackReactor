@@ -25,7 +25,7 @@ exports.search = {
         qb.join('hours', 'restaurants.id', '=', 'hours.restaurant_id');
         qb.where('restaurants.health', health).andWhere('restaurants.price', '>=', price)
         .andWhere('hours.day', day).andWhere('hours.open', '<', time).andWhere('hours.close', '>', time)
-        .orderByRaw('random()').limit(3);// add organization_id here
+        .orderByRaw('rand()').limit(3);// add organization_id here
       }) 
       .fetchAll().then(function(models) {
         console.log(models);

@@ -1,18 +1,17 @@
-var Bookshelf = require('bookshelf');
 var path = require('path');
-
-var db = Bookshelf.initialize({
-  client: 'sqlite3',
+var knex = require('knex')({
+  client: 'mysql',
   connection: {
-    // Change for production
-    host: '127.0.0.1',
-    // user: 'fearless_soup',
-    // password: 'password',
-    // database: 'snackreactordb',
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
     charset: 'utf8',
-    filename: path.join(__dirname, './snackreactordb.sqlite')
-  }
+    port: process.env.DB_PORT
+  }, debug: false
 });
+
+var db = require('bookshelf')(knex);
 
 db.knex.schema.hasTable('restaurants').then(function(exists) {
   if (!exists) {
@@ -81,9 +80,9 @@ db.knex.schema.hasTable('organizations').then(function(exists) {
       organization.string('address');
       organization.string('place_id');
       organization.string('github_id');
-      organization.json('github_profile');
-      organization.float('location_lat');
-      organization.float('location_long');
+      organization.string('github_login');
+      organization.string('location_lat');
+      organization.string('location_long');
       organization.string('domain');
       organization.timestamps();
     }).then(function (table) {

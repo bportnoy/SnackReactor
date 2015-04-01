@@ -30,7 +30,6 @@ router.post('/create/github', authenticate, function(req,res){
                   github_id: req.body.github_id,
                   location_lat: geometry[0],
                   location_long: geometry[1],
-                  github_profile: gitres
                 }).save()
                   .then(function(newOrg){
                   User.forge()
@@ -47,35 +46,27 @@ router.post('/create/github', authenticate, function(req,res){
       }); // geometry request
     } // if null place
     else {
-      request.get('https://api.github.com/orgs/' + req.body.github_login)
-      .query({access_token: req.user.access_token})
-      .end(function(err, gitRes){
-        if (err){
-          console.error('Error fetching Github org data: ' + err);
-          res.status(500).send(err)
-        } //if err
-        Organization.forge({
-          name: req.body.name,
-          address:req.body.address,
-          place_id: req.body.placeId,
-          github_id: req.body.github_id,
-          github_profile: gitRes,
-          location_lat: req.body.details.geometry.location.lat,
-          location_long: req.body.details.geometry.location.long
-        }).save()
-          .then(function(newOrg){
-            User.forge()
-            .where({id: req.user.id})
-            .fetch()
-            .then(function(user){
-              user.set('organization_id', newOrg.get('id'))
-              .save()
-              .then(function(){
-                res.status(201).send();
-              });
-            }); // assign the user and send a response
-          });
-      }); // gitRes
+      Organization.forge({
+        name: req.body.name,
+        address:req.body.address,
+        place_id: req.body.placeId,
+        github_id: req.body.github_id,
+        location_lat: req.body.details.geometry.location.k.toString(),
+        location_long: req.body.details.geometry.location.D.toString(),
+        github_login: req.body.github_login
+      }).save()
+        .then(function(newOrg){
+          User.forge()
+          .where({id: req.user.id})
+          .fetch()
+          .then(function(user){
+            user.set('organization_id', newOrg.get('id'))
+            .save()
+            .then(function(){
+              res.status(201).send();
+            });
+          }); // assign the user and send a response
+        });
     } // else
   }//if no org
    else res.status(409).send('Error: organization with that Github ID already exists.');
