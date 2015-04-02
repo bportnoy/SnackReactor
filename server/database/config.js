@@ -1,4 +1,5 @@
 var path = require('path');
+var fs = require('fs');
 var knex = require('knex')({
   client: 'mysql',
   connection: {
@@ -7,7 +8,12 @@ var knex = require('knex')({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     charset: 'utf8',
-    port: process.env.DB_PORT
+    port: process.env.DB_PORT,
+    ssl: {
+      ca: fs.readFileSync(path.join(__dirname, '../certs/mysql') + '/cacert.pem'),
+      cert: fs.readFileSync(path.join(__dirname, '../certs/mysql') + '/client-cert.pem'),
+      key: fs.readFileSync(path.join(__dirname, '../certs/mysql') + '/client-key.pem')
+    }
   }, debug: false
 });
 
