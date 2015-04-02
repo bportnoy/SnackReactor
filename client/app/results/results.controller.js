@@ -28,8 +28,6 @@ app.controller('ResultsCtrl', function ($scope,CheckLoggedIn, $location, SearchR
     //get photos for each restaurant
     $scope.placesService.getDetails({placeId: restaurant.place_id}, function(result){
       restaurant.photo_url = result.photos[0].getUrl({'maxWidth': 600});
-      console.log(restaurant.photo_url);
-      console.log(restaurant);
       $scope.$apply();
     });
   });
