@@ -14,11 +14,12 @@ exports.calculateAvgRating = function(restaurantId, orgId){
     .avg('rating');
   }).fetch()
   .then(function(rating){
-    var avgRating = rating.get('avg("rating")');
+    console.log(rating);
+    var avgRating = rating.get('avg(`rating`)');
     OrganizationRestaurant.forge({restaurant_id: restaurantId, organization_id: orgId})
     .fetch()
     .then(function(orgRest){
-        orgRest.set('avg_rating', avgRating);
+        orgRest.set('avg_rating', Math.round(avgRating));
         orgRest.save();
     });
   });

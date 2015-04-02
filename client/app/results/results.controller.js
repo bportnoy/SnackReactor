@@ -12,14 +12,24 @@ app.controller('ResultsCtrl', function ($scope,CheckLoggedIn, $location, SearchR
   };
   $scope.restaurants = SharedData.get('results'); // get the results from the data store.
 
+  $scope.placesService = new google.maps.places.PlacesService(window.document.createElement('div'));
+
   $scope.restaurants.forEach(function(restaurant){
+
+    //get ratings for each restaurant
     GetRating(restaurant.id)
     .success(function(data,status,headers,config){
       restaurant.avgRating = data.avgRating;
     })
     .error(function(data,status,headers,config){
       console.error('Error: ' + data);
-    })
+    });
+
+    //get photos for each restaurant
+    $scope.placesService.getDetails({placeId: restaurant.place_id}, function(result){
+      restaurant.photo_url = result.photos[0].getUrl({'maxWidth': 600});
+      $scope.$apply();
+    });
   });
 
   $scope.oneAtATime = true;

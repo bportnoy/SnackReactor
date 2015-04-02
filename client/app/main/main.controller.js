@@ -4,19 +4,6 @@ var app = angular.module('snackReactorApp');
 //refactor to services
 app.controller('MainCtrl', function ($scope, $http, $log,$document, ModalService,$location, SearchRestaurants, SharedData) {
 
-  // $scope.isLogged = false;
-  // $scope.priceClick = false;
-  // $scope.is1healthClick = false;
-  // $scope.is2healthClick = false;
-  // $scope.is3healthClick = false;
-  // $scope.is1priceClick = false;
-  // $scope.is2priceClick = false;
-  // $scope.is3priceClick = false;
-  // $scope.healthRank=1;
-  // $scope.priceRank=1;
-  // $scope.searching = false;
-  // $scope.noResults = false;
-
   $scope.heartText = '';
   $scope.priceText = '';
   $scope.ratingText = '';
@@ -54,7 +41,6 @@ app.controller('MainCtrl', function ($scope, $http, $log,$document, ModalService
     $scope.searching = true;
 
     //save data in case we need to search again
-
     SharedData.set('health', $scope.health);
     SharedData.set('price', $scope.price);
 
