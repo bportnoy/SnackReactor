@@ -39,13 +39,15 @@ exports.restaurants = {
         price: price,
         health: health,
         address: details.formatted_address,
-        location_lat: details.geometry.location.lat,
-        location_long: details.geometry.location.lng,
+        location_lat: details.geometry.location.k,
+        location_long: details.geometry.location.D,
         phone_number: details.formatted_phone_number,
         place_id: details.place_id,
         // photo_url: details[0].result.photos[0].photo_reference, // need to protect against no photo
         description: description,
       };
+
+      console.log(details);
 
       if (details.photos) newRestaurant.photo_url = details.photos[0].photo_reference;
 

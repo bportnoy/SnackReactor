@@ -51,8 +51,8 @@ router.post('/create/github', authenticate, function(req,res){
         address:req.body.address,
         place_id: req.body.placeId,
         github_id: req.body.github_id,
-        location_lat: req.body.details.geometry.location.k.toString(),
-        location_long: req.body.details.geometry.location.D.toString(),
+        location_lat: req.body.details.geometry.location.k,
+        location_long: req.body.details.geometry.location.D,
         github_login: req.body.github_login
       }).save()
         .then(function(newOrg){
